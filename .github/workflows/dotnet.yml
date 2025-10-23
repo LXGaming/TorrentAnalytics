@@ -21,37 +21,37 @@ jobs:
     name: .NET
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v5
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v5
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-    - name: Setup Quill
-      run: curl -sSfL https://raw.githubusercontent.com/anchore/quill/main/install.sh | sh -s -- -b /usr/local/bin
-    - name: Setup Release
-      if: github.event_name == 'create' && github.event.ref_type == 'tag'
-      run: echo "RELEASE_NAME=${GITHUB_REPOSITORY#*/} ${GITHUB_REF_NAME}" >> $GITHUB_ENV
-    - name: Restore
-      run: dotnet restore
-    - name: Test
-      run: dotnet test --configuration "$CONFIGURATION" --no-restore --verbosity normal
-    - name: Publish linux-arm64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime linux-arm64
-    - name: Publish linux-x64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime linux-x64
-    - name: Publish osx-arm64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime osx-arm64
-    - name: Publish osx-x64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime osx-x64
-    - name: Publish win-arm64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime win-arm64
-    - name: Publish win-x64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime win-x64
-    - name: Release
-      if: github.event_name == 'create' && github.event.ref_type == 'tag'
-      uses: softprops/action-gh-release@v2
-      with:
-        files: ./dist/*
-        generate_release_notes: true
-        name: ${{ env.RELEASE_NAME }}
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Setup Quill
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/quill/main/install.sh | sh -s -- -b /usr/local/bin
+      - name: Setup Release
+        if: github.event_name == 'create' && github.event.ref_type == 'tag'
+        run: echo "RELEASE_NAME=${GITHUB_REPOSITORY#*/} ${GITHUB_REF_NAME}" >> $GITHUB_ENV
+      - name: Restore
+        run: dotnet restore
+      - name: Test
+        run: dotnet test --configuration "$CONFIGURATION" --no-restore --verbosity normal
+      - name: Publish linux-arm64
+        run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime linux-arm64
+      - name: Publish linux-x64
+        run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime linux-x64
+      - name: Publish osx-arm64
+        run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime osx-arm64
+      - name: Publish osx-x64
+        run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime osx-x64
+      - name: Publish win-arm64
+        run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime win-arm64
+      - name: Publish win-x64
+        run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime win-x64
+      - name: Release
+        if: github.event_name == 'create' && github.event.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./dist/*
+          generate_release_notes: true
+          name: ${{ env.RELEASE_NAME }}
