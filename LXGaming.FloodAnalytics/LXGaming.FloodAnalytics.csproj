@@ -5,7 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <VersionPrefix>1.4.5</VersionPrefix>
+    <VersionPrefix>1.4.6</VersionPrefix>
     <Authors>Alex Thomson</Authors>
     <Product>FloodAnalytics</Product>
     <Copyright>© Alex Thomson. All rights reserved.</Copyright>
