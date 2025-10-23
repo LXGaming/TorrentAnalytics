@@ -13,7 +13,7 @@
     "organization": "example.com"
   },
   "quartz": {
-    "maxConcurrency": 2
+    "maxConcurrency": 5
   },
   "web": {
     "pooledConnectionLifetime": 300000,
