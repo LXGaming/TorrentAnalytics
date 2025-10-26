@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using LXGaming.Common.Utilities;
+﻿using LXGaming.Common.Utilities;
 
 namespace LXGaming.FloodAnalytics.Utilities;
 
@@ -11,7 +10,7 @@ public static class Constants {
         public const string Authors = "Alex Thomson";
         public const string Website = "https://lxgaming.me/";
 
-        public static readonly string Version = AssemblyUtils.GetVersion(Assembly.GetExecutingAssembly()) ?? "Unknown";
+        public static readonly string Version = AssemblyUtils.GetVersion(typeof(Constants).Assembly) ?? "Unknown";
         public static readonly string UserAgent = $"{Name}/{Version} (+{Website})";
     }
 }
