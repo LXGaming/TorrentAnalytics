@@ -17,8 +17,14 @@ public class WebService(IConfiguration<Config> configuration, JsonSerializerOpti
         }
 
         var client = new HttpClient(handler);
-        client.DefaultRequestHeaders.Add("User-Agent", Constants.Application.UserAgent);
-        client.Timeout = TimeSpan.FromMilliseconds(category.Timeout);
+        try {
+            client.DefaultRequestHeaders.Add("User-Agent", Constants.Application.UserAgent);
+            client.Timeout = TimeSpan.FromMilliseconds(category.Timeout);
+        } catch (Exception) {
+            client.Dispose();
+            throw;
+        }
+
         return client;
     }
 
@@ -28,11 +34,17 @@ public class WebService(IConfiguration<Config> configuration, JsonSerializerOpti
             throw new InvalidOperationException("WebCategory is unavailable");
         }
 
-        return new SocketsHttpHandler {
-            AutomaticDecompression = DecompressionMethods.All,
-            PooledConnectionLifetime = TimeSpan.FromMilliseconds(category.PooledConnectionLifetime),
-            UseCookies = false
-        };
+        var handler = new SocketsHttpHandler();
+        try {
+            handler.AutomaticDecompression = DecompressionMethods.All;
+            handler.PooledConnectionLifetime = TimeSpan.FromMilliseconds(category.PooledConnectionLifetime);
+            handler.UseCookies = false;
+        } catch (Exception) {
+            handler.Dispose();
+            throw;
+        }
+
+        return handler;
     }
 
     public virtual async Task<T> DeserializeAsync<T>(HttpResponseMessage response,

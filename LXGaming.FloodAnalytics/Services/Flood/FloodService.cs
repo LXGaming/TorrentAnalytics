@@ -36,12 +36,14 @@ public class FloodService(
             return;
         }
 
+        var baseAddress = new Uri(category.Address, UriKind.Absolute);
+
         var handler = webService.CreateHandler();
         handler.CookieContainer = new CookieContainer();
         handler.UseCookies = true;
 
         _httpClient = webService.CreateClient(handler);
-        _httpClient.BaseAddress = new Uri(category.Address);
+        _httpClient.BaseAddress = baseAddress;
 
         foreach (var pair in category.AdditionalHeaders) {
             if (!_httpClient.DefaultRequestHeaders.TryAddWithoutValidation(pair.Key, pair.Value)) {
