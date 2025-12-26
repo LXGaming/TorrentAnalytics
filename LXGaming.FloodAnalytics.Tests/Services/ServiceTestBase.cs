@@ -66,12 +66,12 @@ public abstract class ServiceTestBase : IDisposable {
             return;
         }
 
+        _disposed = true;
+
         if (disposing) {
             if (_serviceProvider.IsValueCreated) {
                 _serviceProvider.Value.Dispose();
             }
         }
-
-        _disposed = true;
     }
 }

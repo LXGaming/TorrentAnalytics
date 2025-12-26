@@ -59,10 +59,10 @@ public class InfluxDbService(IConfiguration<Config> configuration) : IHostedServ
             return;
         }
 
+        _disposed = true;
+
         if (disposing) {
             Client?.Dispose();
         }
-
-        _disposed = true;
     }
 }
