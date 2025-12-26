@@ -31,11 +31,11 @@ Log.Logger = new LoggerConfiguration()
 Log.Information("Initialising...");
 
 try {
-    var configuration = await JsonFileConfiguration<Config>.LoadAsync(
-        options: new JsonSerializerOptions {
+    var configuration = await JsonFileConfiguration<Config>.LoadAsync(new JsonFileConfigurationOptions {
+        Options = new JsonSerializerOptions {
             WriteIndented = true
         }
-    );
+    });
 
     var builder = Host.CreateDefaultBuilder(args);
     builder.UseConfiguration(configuration);
