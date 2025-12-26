@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Immutable;
+using System.Text.Json.Serialization;
 
 namespace LXGaming.FloodAnalytics.Services.Flood.Models;
 
-// https://github.com/jesec/flood/blob/7cdf1de10743f6f4bf5f0eb553450f8e2a60e268/shared/types/Torrent.ts#L19
+// https://github.com/jesec/flood/blob/77f4bc7267331f2c731c47dd62b570d4f0bf0c1d/shared/types/Torrent.ts#L19
 public record TorrentProperties {
 
     [JsonPropertyName("bytesDone")]
@@ -78,13 +79,13 @@ public record TorrentProperties {
     public long SizeBytes { get; init; }
 
     [JsonPropertyName("status")]
-    public required List<TorrentStatus> Status { get; init; }
+    public required ImmutableArray<TorrentStatus> Status { get; init; }
 
     [JsonPropertyName("tags")]
-    public required List<string> Tags { get; init; }
+    public required ImmutableArray<string> Tags { get; init; }
 
     [JsonPropertyName("trackerURIs")]
-    public required List<string> TrackerUris { get; init; }
+    public required ImmutableArray<string> TrackerUris { get; init; }
 
     [JsonPropertyName("upRate")]
     public long UpRate { get; init; }
