@@ -25,8 +25,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            lxgaming/floodanalytics
-            ghcr.io/lxgaming/floodanalytics
+            lxgaming/torrentanalytics
+            ghcr.io/lxgaming/torrentanalytics
           tags: |
             type=ref,event=branch
             type=ref,event=pr

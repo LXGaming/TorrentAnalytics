@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LXGaming.TorrentAnalytics", "LXGaming.TorrentAnalytics\LXGaming.TorrentAnalytics.csproj", "{691EC812-1B6B-4D9A-AACA-23E91F5EC347}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LXGaming.TorrentAnalytics.Tests", "LXGaming.TorrentAnalytics.Tests\LXGaming.TorrentAnalytics.Tests.csproj", "{001AB4E1-088C-46A2-966F-FB61942FBFE0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{691EC812-1B6B-4D9A-AACA-23E91F5EC347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691EC812-1B6B-4D9A-AACA-23E91F5EC347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691EC812-1B6B-4D9A-AACA-23E91F5EC347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691EC812-1B6B-4D9A-AACA-23E91F5EC347}.Release|Any CPU.Build.0 = Release|Any CPU
+		{001AB4E1-088C-46A2-966F-FB61942FBFE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{001AB4E1-088C-46A2-966F-FB61942FBFE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{001AB4E1-088C-46A2-966F-FB61942FBFE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{001AB4E1-088C-46A2-966F-FB61942FBFE0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
