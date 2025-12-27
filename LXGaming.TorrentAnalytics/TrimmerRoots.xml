@@ -1,4 +1,24 @@
 <linker>
   <!-- LibLog -->
   <assembly fullname="Serilog" preserve="all" />
+
+  <!-- System.Text.Json.Serialization -->
+  <assembly fullname="System.Collections.Immutable">
+    <type fullname="System.Collections.Immutable.ImmutableArray" />
+    <type fullname="System.Collections.Immutable.ImmutableArray`1" />
+    <type fullname="System.Collections.Immutable.ImmutableList" />
+    <type fullname="System.Collections.Immutable.ImmutableList`1" />
+    <type fullname="System.Collections.Immutable.ImmutableStack" />
+    <type fullname="System.Collections.Immutable.ImmutableStack`1" />
+    <type fullname="System.Collections.Immutable.ImmutableQueue" />
+    <type fullname="System.Collections.Immutable.ImmutableQueue`1" />
+    <type fullname="System.Collections.Immutable.ImmutableSortedSet" />
+    <type fullname="System.Collections.Immutable.ImmutableSortedSet`1" />
+    <type fullname="System.Collections.Immutable.ImmutableHashSet" />
+    <type fullname="System.Collections.Immutable.ImmutableHashSet`1" />
+    <type fullname="System.Collections.Immutable.ImmutableDictionary" />
+    <type fullname="System.Collections.Immutable.ImmutableDictionary`2" />
+    <type fullname="System.Collections.Immutable.ImmutableSortedDictionary" />
+    <type fullname="System.Collections.Immutable.ImmutableSortedDictionary`2" />
+  </assembly>
 </linker>
