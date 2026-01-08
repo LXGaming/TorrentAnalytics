@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using LXGaming.TorrentAnalytics.Configuration.Categories;
 
 namespace LXGaming.TorrentAnalytics.Configuration;

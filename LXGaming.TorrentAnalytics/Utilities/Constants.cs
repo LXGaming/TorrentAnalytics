@@ -1,4 +1,4 @@
-﻿using LXGaming.Common.Utilities;
+using LXGaming.Common.Utilities;
 
 namespace LXGaming.TorrentAnalytics.Utilities;
 

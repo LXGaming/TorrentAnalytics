@@ -1,4 +1,4 @@
-﻿using Quartz;
+using Quartz;
 
 namespace LXGaming.TorrentAnalytics.Tests.Services.Quartz;
 

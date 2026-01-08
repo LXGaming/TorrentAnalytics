@@ -1,4 +1,4 @@
-﻿using InfluxDB.Client;
+using InfluxDB.Client;
 using LXGaming.Configuration.Generic;
 using LXGaming.Hosting;
 using LXGaming.TorrentAnalytics.Configuration;

@@ -1,4 +1,4 @@
-﻿using System.IO.Compression;
+using System.IO.Compression;
 using System.Text.Json;
 using LXGaming.Common.Serilog;
 using LXGaming.Configuration.File.Json;

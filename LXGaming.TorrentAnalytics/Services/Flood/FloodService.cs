@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using LXGaming.Configuration.Generic;
 using LXGaming.Hosting;
 using LXGaming.TorrentAnalytics.Configuration;

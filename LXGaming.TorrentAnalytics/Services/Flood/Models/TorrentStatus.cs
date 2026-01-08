@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using LXGaming.Common.Text.Json.Serialization.Converters;
 
 namespace LXGaming.TorrentAnalytics.Services.Flood.Models;

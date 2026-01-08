@@ -1,4 +1,4 @@
-﻿using LXGaming.Configuration.Generic;
+using LXGaming.Configuration.Generic;
 using LXGaming.Hosting.Reflection;
 using LXGaming.TorrentAnalytics.Configuration;
 using LXGaming.TorrentAnalytics.Services.Flood;

@@ -1,4 +1,4 @@
-﻿using LXGaming.Configuration;
+using LXGaming.Configuration;
 using LXGaming.Configuration.Hosting;
 using LXGaming.TorrentAnalytics.Configuration;
 using LXGaming.TorrentAnalytics.Services.Web;

@@ -1,4 +1,4 @@
-﻿using LXGaming.Configuration.Memory;
+using LXGaming.Configuration.Memory;
 using Microsoft.Extensions.Configuration;
 
 namespace LXGaming.TorrentAnalytics.Tests.Configuration;

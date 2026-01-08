@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using InfluxDB.Client.Api.Domain;
 using InfluxDB.Client.Writes;
 using LXGaming.TorrentAnalytics.Services.Flood.Models;
