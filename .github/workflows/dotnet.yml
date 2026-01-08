@@ -14,7 +14,7 @@ permissions:
 
 env:
   CONFIGURATION: Release
-  DOTNET_VERSION: 8.0.x
+  DOTNET_VERSION: 10.0.x
 
 jobs:
   dotnet:
@@ -27,8 +27,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-      - name: Setup Quill
-        run: curl -sSfL https://raw.githubusercontent.com/anchore/quill/main/install.sh | sh -s -- -b /usr/local/bin
       - name: Setup Release
         if: github.event_name == 'create' && github.event.ref_type == 'tag'
         run: echo "RELEASE_NAME=${GITHUB_REPOSITORY#*/} ${GITHUB_REF_NAME}" >> $GITHUB_ENV

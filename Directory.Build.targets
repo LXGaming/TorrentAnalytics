@@ -1,11 +1,4 @@
 <Project>
-  <Target Name="SignMacOS"
-          Condition="'$(IsPublishable)' == 'true' and $([MSBuild]::IsOSPlatform(`Linux`)) and Exists('/usr/local/bin/quill') and ($(RuntimeIdentifier.StartsWith('osx')) or $(AppHostRuntimeIdentifier.StartsWith('osx')))"
-          AfterTargets="Publish">
-    <Message Importance="high" Text="Signing: $(PublishedSingleFileName)" />
-    <Exec Command="quill sign &quot;$(PublishedSingleFilePath)&quot;" />
-  </Target>
-
   <Target Name="Archive"
           Condition="'$(IsPublishable)' == 'true' and '$(CI)' == 'true'"
           AfterTargets="Publish">
