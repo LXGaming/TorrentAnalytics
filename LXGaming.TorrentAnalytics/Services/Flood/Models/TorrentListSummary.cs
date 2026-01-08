@@ -1,4 +1,4 @@
-using System.Collections.Immutable;
+using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
 namespace LXGaming.TorrentAnalytics.Services.Flood.Models;
@@ -10,5 +10,5 @@ public record TorrentListSummary {
     public long Id { get; init; }
 
     [JsonPropertyName("torrents")]
-    public required ImmutableDictionary<string, TorrentProperties> Torrents { get; init; }
+    public required FrozenDictionary<string, TorrentProperties> Torrents { get; init; }
 }
