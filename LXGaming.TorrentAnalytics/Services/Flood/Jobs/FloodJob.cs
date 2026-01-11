@@ -3,14 +3,15 @@ using InfluxDB.Client.Api.Domain;
 using InfluxDB.Client.Writes;
 using LXGaming.TorrentAnalytics.Services.Flood.Models;
 using LXGaming.TorrentAnalytics.Services.InfluxDb;
+using LXGaming.TorrentAnalytics.Services.Torrent;
+using LXGaming.TorrentAnalytics.Services.Torrent.Utilities;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
 namespace LXGaming.TorrentAnalytics.Services.Flood.Jobs;
 
 [DisallowConcurrentExecution]
-[PersistJobDataAfterExecution]
-public class FloodJob(FloodService floodService, InfluxDbService influxDbService, ILogger<FloodJob> logger) : IJob {
+public class FloodJob(InfluxDbService influxDbService, ILogger<FloodJob> logger, TorrentService torrentService) : IJob {
 
     public static readonly JobKey JobKey = JobKey.Create(nameof(FloodJob));
 
@@ -19,9 +20,19 @@ public class FloodJob(FloodService floodService, InfluxDbService influxDbService
             throw new InvalidOperationException("InfluxDBClient is unavailable");
         }
 
+        foreach (var torrentClient in torrentService.GetClients<FloodTorrentClient>()) {
+            try {
+                await ExecuteAsync(torrentClient, context.ScheduledFireTimeUtc ?? context.FireTimeUtc);
+            } catch (Exception ex) {
+                logger.LogWarning(ex, "Encountered an error while executing {Client}", torrentClient);
+            }
+        }
+    }
+
+    private async Task ExecuteAsync(FloodTorrentClient torrentClient, DateTimeOffset timestamp) {
         TorrentListSummary torrentListSummary;
         try {
-            torrentListSummary = await floodService.EnsureAuthenticatedAsync(floodService.GetTorrentsAsync);
+            torrentListSummary = await torrentClient.GetTorrentsAsync();
         } catch (HttpRequestException ex) {
             if (ex is not { StatusCode: HttpStatusCode.InternalServerError }) {
                 throw;
@@ -67,12 +78,12 @@ public class FloodJob(FloodService floodService, InfluxDbService influxDbService
                 .Field("size_bytes", value.SizeBytes)
                 .Field("up_rate", value.UpRate)
                 .Field("up_total", value.UpTotal)
-                .Timestamp(context.ScheduledFireTimeUtc ?? context.FireTimeUtc, WritePrecision.S)
+                .Timestamp(timestamp, WritePrecision.S)
                 .ToPointData();
 
             points.Add(point);
         }
 
-        await influxDbService.Client.GetWriteApiAsync().WritePointsAsync(points);
+        await influxDbService.Client!.GetWriteApiAsync().WritePointsAsync(points);
     }
 }

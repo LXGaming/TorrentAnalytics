@@ -1,9 +1,5 @@
 {
   "flood": {
-    "address": "https://flood.example.com",
-    "username": "user",
-    "password": "password",
-    "additionalHeaders": {},
     "schedule": "0 */10 * * * ?"
   },
   "influxDb": {
@@ -14,6 +10,20 @@
   },
   "quartz": {
     "maxConcurrency": 5
+  },
+  "torrent": {
+    "clients": [
+      {
+        "type": "Flood",
+        "enabled": false,
+        "name": "",
+        "address": "",
+        "bypassAuthentication": false,
+        "username": "",
+        "password": "",
+        "additionalHeaders": {}
+      }
+    ]
   },
   "web": {
     "pooledConnectionLifetime": 300000,
