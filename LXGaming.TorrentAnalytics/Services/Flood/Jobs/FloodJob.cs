@@ -60,7 +60,7 @@ public class FloodJob(
             var trackers = string.Join(',', value.TrackerUris.Order());
 
             var point = PointData.Builder
-                .Measurement("torrent")
+                .Measurement("flood_torrent")
                 .Tag("id", value.Hash)
                 .Tag("name", value.Name)
                 .Tag("trackers", trackers)
