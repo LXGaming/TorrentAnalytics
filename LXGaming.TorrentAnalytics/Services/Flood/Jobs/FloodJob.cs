@@ -11,7 +11,10 @@ using Quartz;
 namespace LXGaming.TorrentAnalytics.Services.Flood.Jobs;
 
 [DisallowConcurrentExecution]
-public class FloodJob(InfluxDbService influxDbService, ILogger<FloodJob> logger, TorrentService torrentService) : IJob {
+public class FloodJob(
+    InfluxDbService influxDbService,
+    ILogger<FloodJob> logger,
+    TorrentService torrentService) : IJob {
 
     public static readonly JobKey JobKey = JobKey.Create(nameof(FloodJob));
 
@@ -46,13 +49,21 @@ public class FloodJob(InfluxDbService influxDbService, ILogger<FloodJob> logger,
             return;
         }
 
+        var points = GetTorrentMetrics(torrentListSummary, timestamp);
+
+        await influxDbService.Client!.GetWriteApiAsync().WritePointsAsync(points);
+    }
+
+    private static List<PointData> GetTorrentMetrics(TorrentListSummary torrentListSummary, DateTimeOffset timestamp) {
         var points = new List<PointData>(torrentListSummary.Torrents.Count);
         foreach (var (_, value) in torrentListSummary.Torrents) {
+            var trackers = string.Join(',', value.TrackerUris.Order());
+
             var point = PointData.Builder
                 .Measurement("torrent")
                 .Tag("id", value.Hash)
                 .Tag("name", value.Name)
-                .Tag("trackers", string.Join(',', value.TrackerUris.Order()))
+                .Tag("trackers", trackers)
                 .Field("bytes_done", value.BytesDone)
                 .Field("down_rate", value.DownRate)
                 .Field("down_total", value.DownTotal)
@@ -84,6 +95,6 @@ public class FloodJob(InfluxDbService influxDbService, ILogger<FloodJob> logger,
             points.Add(point);
         }
 
-        await influxDbService.Client!.GetWriteApiAsync().WritePointsAsync(points);
+        return points;
     }
 }
