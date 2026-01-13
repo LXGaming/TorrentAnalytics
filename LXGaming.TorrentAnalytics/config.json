@@ -10,13 +10,18 @@
     "bucket": "torrent_analytics",
     "organization": "example.com"
   },
+  "qBittorrent": {
+    "schedule": "0 */10 * * * ?",
+    "torrentMetrics": true,
+    "trackerMetrics": true
+  },
   "quartz": {
     "maxConcurrency": 5
   },
   "torrent": {
     "clients": [
       {
-        "type": "Flood",
+        "type": "QBittorrent",
         "enabled": false,
         "name": "",
         "address": "",

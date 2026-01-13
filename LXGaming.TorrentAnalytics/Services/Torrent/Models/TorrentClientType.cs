@@ -7,5 +7,6 @@ namespace LXGaming.TorrentAnalytics.Services.Torrent.Models;
 public enum TorrentClientType {
 
     None,
-    Flood
+    Flood,
+    QBittorrent
 }

@@ -11,6 +11,9 @@ public class Config {
     [JsonPropertyName("influxDb")]
     public InfluxDbCategory InfluxDbCategory { get; init; } = new();
 
+    [JsonPropertyName("qBittorrent")]
+    public QBittorrentCategory QBittorrentCategory { get; init; } = new();
+
     [JsonPropertyName("quartz")]
     public QuartzCategory QuartzCategory { get; init; } = new();
 
