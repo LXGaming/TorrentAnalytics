@@ -1,6 +1,8 @@
 {
   "flood": {
-    "schedule": "0 */10 * * * ?"
+    "schedule": "0 */10 * * * ?",
+    "torrentMetrics": true,
+    "trackerMetrics": true
   },
   "influxDb": {
     "url": "https://influxdb.example.com",

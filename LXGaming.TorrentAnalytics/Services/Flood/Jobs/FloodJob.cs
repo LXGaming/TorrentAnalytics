@@ -3,6 +3,7 @@ using InfluxDB.Client.Api.Domain;
 using InfluxDB.Client.Writes;
 using LXGaming.TorrentAnalytics.Services.Flood.Models;
 using LXGaming.TorrentAnalytics.Services.InfluxDb;
+using LXGaming.TorrentAnalytics.Services.InfluxDb.Models;
 using LXGaming.TorrentAnalytics.Services.Torrent;
 using LXGaming.TorrentAnalytics.Services.Torrent.Utilities;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace LXGaming.TorrentAnalytics.Services.Flood.Jobs;
 
 [DisallowConcurrentExecution]
 public class FloodJob(
+    FloodService floodService,
     InfluxDbService influxDbService,
     ILogger<FloodJob> logger,
     TorrentService torrentService) : IJob {
@@ -49,9 +51,15 @@ public class FloodJob(
             return;
         }
 
-        var points = GetTorrentMetrics(torrentListSummary, timestamp);
+        if (floodService.TorrentMetrics) {
+            var points = GetTorrentMetrics(torrentListSummary, timestamp);
+            await influxDbService.Client!.GetWriteApiAsync().WritePointsAsync(points);
+        }
 
-        await influxDbService.Client!.GetWriteApiAsync().WritePointsAsync(points);
+        if (floodService.TrackerMetrics) {
+            var points = GetTrackerMetrics(torrentListSummary, timestamp);
+            await influxDbService.Client!.GetWriteApiAsync().WritePointsAsync(points);
+        }
     }
 
     private static List<PointData> GetTorrentMetrics(TorrentListSummary torrentListSummary, DateTimeOffset timestamp) {
@@ -99,6 +107,77 @@ public class FloodJob(
                 .ToPointData();
 
             points.Add(point);
+        }
+
+        return points;
+    }
+
+    private static List<PointData> GetTrackerMetrics(TorrentListSummary torrentListSummary, DateTimeOffset timestamp) {
+        var trackers = new Dictionary<string, Fields>();
+        foreach (var (_, value) in torrentListSummary.Torrents) {
+            var id = string.Join(',', value.TrackerUris.Order());
+            if (string.IsNullOrEmpty(id)) {
+                continue;
+            }
+
+            Fields fields;
+            if (trackers.TryGetValue(id, out var existingFields)) {
+                fields = existingFields;
+            } else {
+                fields = new Fields();
+                trackers[id] = fields;
+            }
+
+            var crossSeeds = torrentListSummary.Torrents
+                .Select(model => model.Value)
+                .Where(model => string.Equals(model.Name, value.Name))
+                .Any(model => !string.Equals(model.Hash, value.Hash));
+
+            fields
+                .AddOrIncrement("bytes_done", value.BytesDone)
+                .AddOrIncrement("cross_seeds", crossSeeds ? 1 : 0)
+                .AddOrIncrement("down_rate", value.DownRate)
+                .AddOrIncrement("down_total", value.DownTotal)
+                .AddOrIncrement("eta", value.Eta)
+                .AddOrIncrement("is_active", value.Status.Contains(TorrentStatus.Active) ? 1 : 0)
+                .AddOrIncrement("is_checking", value.Status.Contains(TorrentStatus.Checking) ? 1 : 0)
+                .AddOrIncrement("is_complete", value.Status.Contains(TorrentStatus.Complete) ? 1 : 0)
+                .AddOrIncrement("is_downloading", value.Status.Contains(TorrentStatus.Downloading) ? 1 : 0)
+                .AddOrIncrement("is_error", value.Status.Contains(TorrentStatus.Error) ? 1 : 0)
+                .AddOrIncrement("is_inactive", value.Status.Contains(TorrentStatus.Inactive) ? 1 : 0)
+                .AddOrIncrement("is_initial_seeding", value.IsInitialSeeding ? 1 : 0)
+                .AddOrIncrement("is_seeding", value.Status.Contains(TorrentStatus.Seeding) ? 1 : 0)
+                .AddOrIncrement("is_sequential", value.IsSequential ? 1 : 0)
+                .AddOrIncrement("is_stopped", value.Status.Contains(TorrentStatus.Stopped) ? 1 : 0)
+                .AddOrIncrement("peers_connected", value.PeersConnected)
+                .AddOrIncrement("peers_total", value.PeersTotal)
+                .AddOrIncrement("percent_complete", value.PercentComplete)
+                .AddOrIncrement("ratio", value.Ratio)
+                .AddOrIncrement("seeds_connected", value.SeedsConnected)
+                .AddOrIncrement("seeds_total", value.SeedsTotal)
+                .AddOrIncrement("size_bytes", value.SizeBytes)
+                .AddOrIncrement("torrent", 1)
+                .AddOrIncrement("up_rate", value.UpRate)
+                .AddOrIncrement("up_total", value.UpTotal)
+                .AddOrIncrement(value.IsPrivate ? "is_private" : "is_public", 1);
+        }
+
+        var points = new List<PointData>(trackers.Count);
+        foreach (var (id, fields) in trackers) {
+            var builder = PointData.Builder
+                .Measurement("flood_tracker")
+                .Tag("id", id);
+
+            foreach (var (key, value) in fields.FloatingPoint) {
+                builder.Field(key, value);
+            }
+
+            foreach (var (key, value) in fields.Integral) {
+                builder.Field(key, value);
+            }
+
+            builder.Timestamp(timestamp, WritePrecision.S);
+            points.Add(builder.ToPointData());
         }
 
         return points;

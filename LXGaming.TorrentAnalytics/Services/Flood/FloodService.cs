@@ -18,6 +18,10 @@ public class FloodService(
     ISchedulerFactory schedulerFactory,
     IServiceProvider serviceProvider) : IHostedService, ITorrentClientProvider {
 
+    public bool TorrentMetrics => configuration.Value?.FloodCategory.TorrentMetrics == true;
+
+    public bool TrackerMetrics => configuration.Value?.FloodCategory.TrackerMetrics == true;
+
     public TorrentClientType Type => TorrentClientType.Flood;
 
     public async Task StartAsync(CancellationToken cancellationToken) {
