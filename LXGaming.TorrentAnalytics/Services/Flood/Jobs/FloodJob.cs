@@ -58,6 +58,10 @@ public class FloodJob(
         var points = new List<PointData>(torrentListSummary.Torrents.Count);
         foreach (var (_, value) in torrentListSummary.Torrents) {
             var trackers = string.Join(',', value.TrackerUris.Order());
+            var crossSeeds = torrentListSummary.Torrents
+                .Select(model => model.Value)
+                .Where(model => string.Equals(model.Name, value.Name))
+                .Count(model => !string.Equals(model.Hash, value.Hash));
 
             var point = PointData.Builder
                 .Measurement("flood_torrent")
@@ -65,8 +69,10 @@ public class FloodJob(
                 .Tag("name", value.Name)
                 .Tag("trackers", trackers)
                 .Field("bytes_done", value.BytesDone)
+                .Field("cross_seeds", crossSeeds)
                 .Field("down_rate", value.DownRate)
                 .Field("down_total", value.DownTotal)
+                .Field("eta", value.Eta)
                 .Field("is_active", value.Status.Contains(TorrentStatus.Active))
                 .Field("is_checking", value.Status.Contains(TorrentStatus.Checking))
                 .Field("is_complete", value.Status.Contains(TorrentStatus.Complete))
