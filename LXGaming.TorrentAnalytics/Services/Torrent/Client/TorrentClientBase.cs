@@ -7,7 +7,7 @@ namespace LXGaming.TorrentAnalytics.Services.Torrent.Client;
 
 public abstract class TorrentClientBase : ITorrentClient {
 
-    protected virtual TorrentClientOptions Options { get; }
+    protected TorrentClientOptions Options { get; }
 
     protected ILogger Logger { get; }
 
