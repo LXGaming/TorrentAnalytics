@@ -13,7 +13,7 @@ public class WebService(IConfiguration<Config> configuration, JsonSerializerOpti
     public virtual HttpClient CreateClient(HttpMessageHandler handler) {
         var category = configuration.Value?.WebCategory;
         if (category == null) {
-            throw new InvalidOperationException("WebCategory is unavailable");
+            throw new InvalidOperationException("WebCategory is unavailable.");
         }
 
         var client = new HttpClient(handler);
@@ -31,7 +31,7 @@ public class WebService(IConfiguration<Config> configuration, JsonSerializerOpti
     public SocketsHttpHandler CreateHandler() {
         var category = configuration.Value?.WebCategory;
         if (category == null) {
-            throw new InvalidOperationException("WebCategory is unavailable");
+            throw new InvalidOperationException("WebCategory is unavailable.");
         }
 
         var handler = new SocketsHttpHandler();
@@ -51,6 +51,6 @@ public class WebService(IConfiguration<Config> configuration, JsonSerializerOpti
         CancellationToken cancellationToken = default) {
         await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
         return await JsonSerializer.DeserializeAsync<T>(stream, JsonSerializerOptions, cancellationToken)
-               ?? throw new JsonException($"Failed to deserialize {typeof(T).Name}");
+               ?? throw new JsonException($"Failed to deserialize {typeof(T).Name}.");
     }
 }

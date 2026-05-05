@@ -27,7 +27,7 @@ public class QBittorrentService(
     public async Task StartAsync(CancellationToken cancellationToken) {
         var category = configuration.Value?.QBittorrentCategory;
         if (category == null) {
-            throw new InvalidOperationException("qBittorrentCategory is unavailable");
+            throw new InvalidOperationException("qBittorrentCategory is unavailable.");
         }
 
         var scheduler = await schedulerFactory.GetScheduler(cancellationToken);

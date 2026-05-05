@@ -15,7 +15,7 @@ public static class Extensions {
 
     public static IServiceCollection AddConfiguration(this IServiceCollection services) {
         if (services.Any(descriptor => descriptor.ServiceType == typeof(IConfiguration))) {
-            throw new InvalidOperationException("Configuration is already registered");
+            throw new InvalidOperationException("Configuration is already registered.");
         }
 
         return services.AddConfiguration(new TestConfiguration<Config>());
@@ -23,7 +23,7 @@ public static class Extensions {
 
     public static IServiceCollection AddSchedulerFactory(this IServiceCollection services) {
         if (services.Any(descriptor => descriptor.ServiceType == typeof(ISchedulerFactory))) {
-            throw new InvalidOperationException("SchedulerFactory is already registered");
+            throw new InvalidOperationException("SchedulerFactory is already registered.");
         }
 
         return services.AddSingleton<ISchedulerFactory, TestSchedulerFactory>();
@@ -31,7 +31,7 @@ public static class Extensions {
 
     public static IServiceCollection AddWebService(this IServiceCollection services) {
         if (services.Any(descriptor => descriptor.ServiceType == typeof(WebService))) {
-            throw new InvalidOperationException("WebService is already registered");
+            throw new InvalidOperationException("WebService is already registered.");
         }
 
         return services

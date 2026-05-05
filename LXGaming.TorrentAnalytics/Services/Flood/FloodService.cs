@@ -27,7 +27,7 @@ public class FloodService(
     public async Task StartAsync(CancellationToken cancellationToken) {
         var category = configuration.Value?.FloodCategory;
         if (category == null) {
-            throw new InvalidOperationException("FloodCategory is unavailable");
+            throw new InvalidOperationException("FloodCategory is unavailable.");
         }
 
         var scheduler = await schedulerFactory.GetScheduler(cancellationToken);

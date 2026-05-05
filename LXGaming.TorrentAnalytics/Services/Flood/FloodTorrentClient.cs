@@ -51,7 +51,7 @@ public class FloodTorrentClient : TorrentClientBase {
             return await HttpClient.SendAsync(request, completionOption, cancellationToken);
         }
 
-        throw new AuthenticationException("Authentication failed");
+        throw new AuthenticationException("Authentication failed.");
     }
 
     protected async Task<bool> AuthenticateInternalAsync() {

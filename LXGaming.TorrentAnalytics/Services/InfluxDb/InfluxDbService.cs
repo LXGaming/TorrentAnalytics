@@ -17,23 +17,23 @@ public class InfluxDbService(IConfiguration<Config> configuration) : IHostedServ
     public Task StartAsync(CancellationToken cancellationToken) {
         var category = configuration.Value?.InfluxDbCategory;
         if (category == null) {
-            throw new InvalidOperationException("InfluxDbCategory is unavailable");
+            throw new InvalidOperationException("InfluxDbCategory is unavailable.");
         }
 
         if (string.IsNullOrEmpty(category.Url)) {
-            throw new InvalidOperationException("Url has not been configured for InfluxDb");
+            throw new InvalidOperationException("Url has not been configured for InfluxDb.");
         }
 
         if (string.IsNullOrEmpty(category.Token)) {
-            throw new InvalidOperationException("Token has not been configured for InfluxDb");
+            throw new InvalidOperationException("Token has not been configured for InfluxDb.");
         }
 
         if (string.IsNullOrEmpty(category.Bucket)) {
-            throw new InvalidOperationException("Bucket has not been configured for InfluxDb");
+            throw new InvalidOperationException("Bucket has not been configured for InfluxDb.");
         }
 
         if (string.IsNullOrEmpty(category.Organization)) {
-            throw new InvalidOperationException("Organization has not been configured for InfluxDb");
+            throw new InvalidOperationException("Organization has not been configured for InfluxDb.");
         }
 
         Client ??= new InfluxDBClient(new InfluxDBClientOptions(category.Url) {

@@ -26,7 +26,7 @@ public abstract class TorrentClientBase : ITorrentClient {
 
     private HttpClient CreateClient() {
         if (string.IsNullOrEmpty(Options.Address)) {
-            throw new InvalidOperationException("Address has not been configured");
+            throw new InvalidOperationException("Address has not been configured.");
         }
 
         var baseAddress = new Uri(Options.Address, UriKind.Absolute);

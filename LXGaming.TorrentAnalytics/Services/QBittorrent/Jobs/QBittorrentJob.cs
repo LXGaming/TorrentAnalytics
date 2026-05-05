@@ -23,7 +23,7 @@ public class QBittorrentJob(
 
     public async Task Execute(IJobExecutionContext context) {
         if (influxDbService.Client == null) {
-            throw new InvalidOperationException("InfluxDBClient is unavailable");
+            throw new InvalidOperationException("InfluxDBClient is unavailable.");
         }
 
         foreach (var torrentClient in torrentService.GetClients<QBittorrentTorrentClient>()) {

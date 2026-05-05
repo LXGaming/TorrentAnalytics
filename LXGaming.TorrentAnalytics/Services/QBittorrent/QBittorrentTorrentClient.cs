@@ -54,7 +54,7 @@ public class QBittorrentTorrentClient : TorrentClientBase {
             return await HttpClient.SendAsync(request, completionOption, cancellationToken);
         }
 
-        throw new AuthenticationException("Authentication failed");
+        throw new AuthenticationException("Authentication failed.");
     }
 
     protected async Task<bool> AuthenticateInternalAsync() {
@@ -78,7 +78,7 @@ public class QBittorrentTorrentClient : TorrentClientBase {
 
     public bool IsVersionAtLeast(int major, int minor, int build) {
         if (_version == null) {
-            throw new InvalidOperationException("qBittorrent version is unavailable");
+            throw new InvalidOperationException("qBittorrent version is unavailable.");
         }
 
         return _version.Major >= major && _version.Minor >= minor && _version.Build >= build;
@@ -102,7 +102,7 @@ public class QBittorrentTorrentClient : TorrentClientBase {
         return content switch {
             "Ok." => true,
             "Fails." => false,
-            _ => throw new InvalidOperationException($"{content} is not supported")
+            _ => throw new InvalidOperationException($"{content} is not supported.")
         };
     }
 
