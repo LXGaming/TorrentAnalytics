@@ -96,14 +96,28 @@ public class QBittorrentTorrentClient : TorrentClientBase {
             { "password", Options.Password }
         });
         using var response = await HttpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-        response.EnsureSuccessStatusCode();
 
-        var content = await response.Content.ReadAsStringAsync();
-        return content switch {
-            "Ok." => true,
-            "Fails." => false,
-            _ => throw new InvalidOperationException($"{content} is not supported.")
-        };
+        // 5.1.4
+        if (response.StatusCode == HttpStatusCode.OK) {
+            var content = await response.Content.ReadAsStringAsync();
+            return content switch {
+                "Ok." => true,
+                "Fails." => false,
+                _ => throw new InvalidOperationException($"{content} is not supported.")
+            };
+        }
+
+        // 5.2.0+
+        if (response.StatusCode == HttpStatusCode.NoContent) {
+            return true;
+        }
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized) {
+            return false;
+        }
+
+        throw new HttpRequestException($"Response status code does not indicate success: {(int) response.StatusCode}.",
+            null, response.StatusCode);
     }
 
     protected async Task LogoutAsync() {
