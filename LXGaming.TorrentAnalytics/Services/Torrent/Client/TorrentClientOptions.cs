@@ -26,6 +26,12 @@ public class TorrentClientOptions {
     [JsonPropertyName("password")]
     public string Password { get; set; } = "";
 
+    [JsonPropertyName("apiKey")]
+    public string ApiKey { get; set; } = "";
+
+    [JsonIgnore]
+    public bool UsingApiKey => !string.IsNullOrWhiteSpace(ApiKey);
+
     [JsonPropertyName("additionalHeaders")]
     public Dictionary<string, string> AdditionalHeaders { get; set; } = new();
 

@@ -28,6 +28,7 @@
         "bypassAuthentication": false,
         "username": "",
         "password": "",
+        "apiKey": "",
         "additionalHeaders": {}
       }
     ]
