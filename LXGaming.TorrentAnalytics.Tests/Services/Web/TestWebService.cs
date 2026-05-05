@@ -1,5 +1,4 @@
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using LXGaming.Configuration.Generic;
 using LXGaming.TorrentAnalytics.Configuration;
@@ -16,20 +15,26 @@ public class TestWebService : WebService {
     }
 
     public override async Task<T> DeserializeAsync<T>(HttpResponseMessage response, CancellationToken cancellationToken = default) {
-        var expectedNode = await base.DeserializeAsync<JsonNode>(response, cancellationToken);
-        return Deserialize<T>(expectedNode);
+        var expectedElement = await base.DeserializeAsync<JsonElement>(response, cancellationToken);
+        return Deserialize<T>(expectedElement);
     }
 
-    private T Deserialize<T>(JsonNode expectedNode) {
-        Assert.That(expectedNode, Is.Not.Null);
+    private T Deserialize<T>(JsonElement expectedElement) {
+        Assert.That(expectedElement, Is.Not.Default);
 
-        var actualObject = expectedNode.Deserialize<T>(JsonSerializerOptions);
+        var expectedString = JsonSerializer.Serialize(expectedElement, JsonSerializerOptions);
+        Assert.That(expectedString, Is.Not.Null.And.Not.Empty);
+
+        var actualObject = expectedElement.Deserialize<T>(JsonSerializerOptions);
         Assert.That(actualObject, Is.Not.Null);
 
-        var actualNode = JsonSerializer.SerializeToNode<T>(actualObject!, JsonSerializerOptions);
-        Assert.That(actualNode, Is.Not.Null);
+        var actualElement = JsonSerializer.SerializeToElement<T>(actualObject!, JsonSerializerOptions);
+        Assert.That(actualElement, Is.Not.Default);
 
-        Warn.Unless(actualNode!.ToJsonString(), Is.EqualTo(expectedNode.ToJsonString()).IgnoreCase);
+        var actualString = JsonSerializer.Serialize(actualElement, JsonSerializerOptions);
+        Assert.That(actualString, Is.Not.Null.And.Not.Empty);
+
+        Warn.Unless(actualString, Is.EqualTo(expectedString).IgnoreCase);
         return actualObject!;
     }
 }
