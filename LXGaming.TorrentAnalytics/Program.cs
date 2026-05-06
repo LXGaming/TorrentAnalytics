@@ -37,26 +37,24 @@ try {
         }
     });
 
-    var builder = Host.CreateDefaultBuilder(args);
-    builder.UseConfiguration(configuration);
-    builder.UseSerilog();
+    var builder = Host.CreateApplicationBuilder(args);
+    builder.Services.AddConfiguration(configuration);
+    builder.Services.AddSerilog();
 
-    builder.ConfigureServices(services => {
-        services.Configure<QuartzOptions>(options => {
-            var category = configuration.Value!.QuartzCategory;
-            if (category.MaxConcurrency <= 0) {
-                Log.Warning("MaxConcurrency is out of bounds. Resetting to {Value}", QuartzCategory.DefaultMaxConcurrency);
-                category.MaxConcurrency = QuartzCategory.DefaultMaxConcurrency;
-            }
+    builder.Services.Configure<QuartzOptions>(options => {
+        var category = configuration.Value!.QuartzCategory;
+        if (category.MaxConcurrency <= 0) {
+            Log.Warning("MaxConcurrency is out of bounds. Resetting to {Value}", QuartzCategory.DefaultMaxConcurrency);
+            category.MaxConcurrency = QuartzCategory.DefaultMaxConcurrency;
+        }
 
-            options.Add("quartz.threadPool.maxConcurrency", $"{category.MaxConcurrency}");
-        });
-        services.AddQuartz();
-        services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
-
-        services.AddWebService();
-        services.AddAllServices();
+        options.Add("quartz.threadPool.maxConcurrency", $"{category.MaxConcurrency}");
     });
+    builder.Services.AddQuartz();
+    builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+    builder.Services.AddWebService();
+    builder.Services.AddAllServices();
 
     var host = builder.Build();
 
