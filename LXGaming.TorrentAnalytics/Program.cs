@@ -7,7 +7,6 @@ using LXGaming.Hosting.Generated;
 using LXGaming.TorrentAnalytics.Configuration;
 using LXGaming.TorrentAnalytics.Configuration.Categories;
 using LXGaming.TorrentAnalytics.Services.Web.Utilities;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using Serilog;
@@ -41,16 +40,15 @@ try {
     builder.Services.AddConfiguration(configuration);
     builder.Services.AddSerilog();
 
-    builder.Services.Configure<QuartzOptions>(options => {
+    builder.Services.AddQuartz(configurator => {
         var category = configuration.Value!.QuartzCategory;
         if (category.MaxConcurrency <= 0) {
             Log.Warning("MaxConcurrency is out of bounds. Resetting to {Value}", QuartzCategory.DefaultMaxConcurrency);
             category.MaxConcurrency = QuartzCategory.DefaultMaxConcurrency;
         }
 
-        options.Add("quartz.threadPool.maxConcurrency", $"{category.MaxConcurrency}");
+        configurator.UseDefaultThreadPool(category.MaxConcurrency);
     });
-    builder.Services.AddQuartz();
     builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
     builder.Services.AddWebService();
