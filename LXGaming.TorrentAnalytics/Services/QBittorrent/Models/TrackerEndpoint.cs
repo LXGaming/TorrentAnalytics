@@ -1,30 +1,23 @@
-using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 
 namespace LXGaming.TorrentAnalytics.Services.QBittorrent.Models;
 
-public record TorrentTracker {
+public record TrackerEndpoint {
 
-    /// <remarks>
-    /// Added in 5.2.0
-    /// </remarks>
-    [JsonPropertyName("endpoints")]
-    public ImmutableArray<TrackerEndpoint>? Endpoints { get; init; }
+    [JsonPropertyName("bt_version")]
+    public int BitTorrentVersion { get; init; }
 
-    /// <remarks>
-    /// Added in 5.2.0
-    /// </remarks>
     [JsonPropertyName("min_announce")]
-    public long? MinimumAnnounce { get; init; }
+    public long MinimumAnnounce { get; init; }
 
     [JsonPropertyName("msg")]
     public required string Message { get; init; }
 
-    /// <remarks>
-    /// Added in 5.2.0
-    /// </remarks>
+    [JsonPropertyName("name")]
+    public required string Name { get; init; }
+
     [JsonPropertyName("next_announce")]
-    public long? NextAnnounce { get; init; }
+    public long NextAnnounce { get; init; }
 
     [JsonPropertyName("num_downloaded")]
     public int Downloaded { get; init; }
@@ -41,15 +34,6 @@ public record TorrentTracker {
     [JsonPropertyName("status")]
     public TrackerStatus Status { get; init; }
 
-    [JsonPropertyName("tier")]
-    public int Tier { get; init; }
-
-    /// <remarks>
-    /// Added in 5.2.0
-    /// </remarks>
     [JsonPropertyName("updating")]
-    public bool? Updating { get; init; }
-
-    [JsonPropertyName("url")]
-    public required string Url { get; init; }
+    public bool Updating { get; init; }
 }

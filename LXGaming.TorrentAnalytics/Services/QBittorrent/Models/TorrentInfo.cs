@@ -33,8 +33,32 @@ public record TorrentInfo {
     [JsonPropertyName("completion_on")]
     public long CompletionOn { get; init; }
 
+    /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("connections_count")]
+    public int? ConnectionsCount { get; init; }
+
+    /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("connections_limit")]
+    public int? ConnectionsLimit { get; init; }
+
     [JsonPropertyName("content_path")]
     public required string ContentPath { get; init; }
+
+    /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("created_by")]
+    public string? CreatedBy { get; init; }
+
+    /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("creation_date")]
+    public long? CreationDate { get; init; }
 
     [JsonPropertyName("dl_limit")]
     public int DownloadLimit { get; init; }
@@ -109,6 +133,24 @@ public record TorrentInfo {
     public int SeedsConnected { get; init; }
 
     /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("piece_size")]
+    public long? PieceSize { get; init; }
+
+    /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("pieces_have")]
+    public int? PiecesHave { get; init; }
+
+    /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("pieces_num")]
+    public int? PiecesTotal { get; init; }
+
+    /// <remarks>
     /// Added in 5.0.0
     /// </remarks>
     [JsonPropertyName("popularity")]
@@ -159,6 +201,12 @@ public record TorrentInfo {
     [JsonPropertyName("seq_dl")]
     public bool SequentialDownload { get; init; }
 
+    /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("share_limit_action")]
+    public ShareLimitAction? ShareLimitAction { get; init; }
+
     [JsonPropertyName("size")]
     public long Size { get; init; }
 
@@ -177,6 +225,12 @@ public record TorrentInfo {
 
     [JsonPropertyName("total_size")]
     public long TotalSize { get; init; }
+
+    /// <remarks>
+    /// Added in 5.2.0
+    /// </remarks>
+    [JsonPropertyName("total_wasted")]
+    public long? TotalWasted { get; init; }
 
     [JsonPropertyName("tracker")]
     public required string Tracker { get; init; }
