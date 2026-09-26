@@ -19,9 +19,9 @@ public class QBittorrentJob(
     QBittorrentService qBittorrentService,
     TorrentService torrentService) : IJob {
 
-    public static readonly JobKey JobKey = JobKey.Create(nameof(QBittorrentJob));
+    public static readonly JobKey JobKey = new(nameof(QBittorrentJob));
 
-    public async Task Execute(IJobExecutionContext context) {
+    public async ValueTask Execute(IJobExecutionContext context, CancellationToken cancellationToken = default) {
         if (influxDbService.Client == null) {
             throw new InvalidOperationException("InfluxDBClient is unavailable.");
         }

@@ -4,15 +4,15 @@ namespace LXGaming.TorrentAnalytics.Tests.Services.Quartz;
 
 public class TestSchedulerFactory : ISchedulerFactory {
 
-    public Task<IReadOnlyList<IScheduler>> GetAllSchedulers(CancellationToken cancellationToken = default) {
+    public ValueTask<List<IScheduler>> GetAllSchedulers(CancellationToken cancellationToken = default) {
         throw new InvalidOperationException("Scheduler is unavailable.");
     }
 
-    public Task<IScheduler> GetScheduler(CancellationToken cancellationToken = default) {
+    public ValueTask<IScheduler> GetScheduler(CancellationToken cancellationToken = default) {
         throw new InvalidOperationException("Scheduler is unavailable.");
     }
 
-    public Task<IScheduler?> GetScheduler(string schedName, CancellationToken cancellationToken = default) {
+    public ValueTask<IScheduler?> LookupScheduler(string schedulerName, CancellationToken cancellationToken = default) {
         throw new InvalidOperationException("Scheduler is unavailable.");
     }
 }

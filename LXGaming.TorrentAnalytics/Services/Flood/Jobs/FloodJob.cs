@@ -18,9 +18,9 @@ public class FloodJob(
     ILogger<FloodJob> logger,
     TorrentService torrentService) : IJob {
 
-    public static readonly JobKey JobKey = JobKey.Create(nameof(FloodJob));
+    public static readonly JobKey JobKey = new(nameof(FloodJob));
 
-    public async Task Execute(IJobExecutionContext context) {
+    public async ValueTask Execute(IJobExecutionContext context, CancellationToken cancellationToken = default) {
         if (influxDbService.Client == null) {
             throw new InvalidOperationException("InfluxDBClient is unavailable.");
         }

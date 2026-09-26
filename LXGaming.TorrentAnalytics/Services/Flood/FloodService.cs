@@ -35,6 +35,7 @@ public class FloodService(
             await scheduler.ScheduleJob(
                 JobBuilder.Create<FloodJob>().WithIdentity(FloodJob.JobKey).Build(),
                 TriggerBuilder.Create().WithCronSchedule(category.Schedule).Build(),
+                default,
                 cancellationToken);
         } else {
             logger.LogWarning("Flood schedule has not been configured");

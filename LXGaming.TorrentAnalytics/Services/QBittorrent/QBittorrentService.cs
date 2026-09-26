@@ -35,6 +35,7 @@ public class QBittorrentService(
             await scheduler.ScheduleJob(
                 JobBuilder.Create<QBittorrentJob>().WithIdentity(QBittorrentJob.JobKey).Build(),
                 TriggerBuilder.Create().WithCronSchedule(category.Schedule).Build(),
+                default,
                 cancellationToken);
         } else {
             logger.LogWarning("qBittorrent schedule has not been configured");
