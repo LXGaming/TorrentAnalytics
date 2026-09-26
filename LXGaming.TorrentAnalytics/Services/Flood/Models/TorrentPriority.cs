@@ -1,6 +1,6 @@
 namespace LXGaming.TorrentAnalytics.Services.Flood.Models;
 
-// https://github.com/jesec/flood/blob/77f4bc7267331f2c731c47dd62b570d4f0bf0c1d/shared/types/Torrent.ts#L12
+// https://github.com/jesec/flood/blob/b0968ef9c0cdd7ecabbbab78335706e2643e6bdd/shared/types/Torrent.ts#L12
 public enum TorrentPriority {
 
     DoNotDownload = 0,

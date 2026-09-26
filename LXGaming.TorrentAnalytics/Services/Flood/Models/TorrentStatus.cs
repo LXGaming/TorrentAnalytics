@@ -3,7 +3,7 @@ using LXGaming.Common.Text.Json.Serialization.Converters;
 
 namespace LXGaming.TorrentAnalytics.Services.Flood.Models;
 
-// https://github.com/jesec/flood/blob/77f4bc7267331f2c731c47dd62b570d4f0bf0c1d/shared/constants/torrentStatusMap.ts
+// https://github.com/jesec/flood/blob/b0968ef9c0cdd7ecabbbab78335706e2643e6bdd/shared/constants/torrentStatusMap.ts
 [JsonConverter(typeof(StringEnumConverter<TorrentStatus>))]
 public enum TorrentStatus {
 
@@ -28,6 +28,12 @@ public enum TorrentStatus {
     [JsonPropertyName("inactive")]
     Inactive = 6,
 
+    [JsonPropertyName("warning")]
+    Warning = 7,
+
     [JsonPropertyName("error")]
-    Error = 7
+    Error = 8,
+
+    [JsonPropertyName("moving")]
+    Moving = 9,
 }

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace LXGaming.TorrentAnalytics.Services.Flood.Models;
 
-// https://github.com/jesec/flood/blob/77f4bc7267331f2c731c47dd62b570d4f0bf0c1d/shared/types/Torrent.ts#L19
+// https://github.com/jesec/flood/blob/b0968ef9c0cdd7ecabbbab78335706e2643e6bdd/shared/types/Torrent.ts#L19
 public record TorrentProperties {
 
     [JsonPropertyName("bytesDone")]
@@ -77,6 +77,9 @@ public record TorrentProperties {
 
     [JsonPropertyName("sizeBytes")]
     public long SizeBytes { get; init; }
+
+    [JsonPropertyName("selectedSizeBytes")]
+    public long SelectedSizeBytes { get; init; }
 
     [JsonPropertyName("status")]
     public required ImmutableArray<TorrentStatus> Status { get; init; }
