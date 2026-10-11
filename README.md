@@ -4,8 +4,7 @@
 [![Docker Hub](https://img.shields.io/docker/v/lxgaming/torrentanalytics/latest?label=Docker%20Hub)](https://hub.docker.com/r/lxgaming/torrentanalytics)
 
 ## Prerequisites
-- [Flood](https://flood.js.org/)
-- [Grafana](https://grafana.com/)
+- [Flood](https://flood.js.org/) or [qBittorrent](https://www.qbittorrent.org/)
 - [InfluxDB](https://www.influxdata.com/)
 
 ## Usage
